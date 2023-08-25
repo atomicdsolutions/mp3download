@@ -1,0 +1,15 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="container">
+    <form [formGroup]="downloadForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
+        <mat-form-field>
+            <mat-label>URL</mat-label>
+            <input matInput formControlName="url" placeholder="Enter the URL">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Times</mat-label>
+            <input matInput formControlName="times" placeholder="Enter the Times">
+        </mat-form-field>
+        <button mat-raised-button type="submit">Submit</button>
+    </form>
+    <app-metadata-display [metadata]="metadata" [userAgent]="userAgent"></app-metadata-display>
+
+</div>

@@ -1,0 +1,16 @@
+<table *ngIf="metadata && userAgent">
+    <tr>
+      <td>Title</td>
+      <td>{{ metadata.title }}</td>
+    </tr>
+    <tr>
+      <td>Artist</td>
+      <td>{{ metadata.artist }}</td>
+    </tr>
+    <!-- Add other metadata fields similarly -->
+    <tr>
+      <td>User Agent</td>
+      <td>{{ userAgent }}</td>
+    </tr>
+  </table>
+  

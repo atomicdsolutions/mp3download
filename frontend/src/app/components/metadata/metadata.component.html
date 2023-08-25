@@ -1,0 +1,12 @@
+<div fxLayout="column" fxLayoutAlign="center center" class="container">
+    <form [formGroup]="metadataForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
+        <mat-form-field>
+            <mat-label>URL</mat-label>
+            <input matInput formControlName="url" placeholder="Enter the URL">
+        <mat-label for="file">Upload File:</mat-label>
+        <input type="file" id="file" (change)="onFileChange($event)">
+        </mat-form-field>
+        <button mat-raised-button type="submit">Get Metadata</button>
+    </form>
+    <app-metadata-table [metadata]="metadata"></app-metadata-table>
+</div>

@@ -1,0 +1,27 @@
+.app-nav {
+    ul {
+      list-style-type: none;  // Remove bullet points
+      padding: 0;  // Remove default padding
+      display: flex;  // Display list items in a row
+      gap: 20px;  // Gap between list items
+  
+      li {
+        a {
+          text-decoration: none;  // Remove underline
+          color: #fff;  // White text
+          padding: 10px 15px;  // Some padding around links
+          border-radius: 5px;  // Rounded corners
+          transition: background-color 0.3s ease;  // Smooth transition for hover effect
+  
+          &:hover {
+            background-color: rgba(255, 255, 255, 0.1);  // Slight white background on hover
+          }
+  
+          &.active {
+            background-color: rgba(255, 255, 255, 0.2);  // Slightly more prominent background for active link
+          }
+        }
+      }
+    }
+  }
+  
