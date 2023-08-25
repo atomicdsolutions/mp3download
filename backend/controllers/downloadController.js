@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const Download = require('../models/download.model');
-const fileUploadMiddleware = require('../middleware/fileUploadMiddleware');
+const fileUploadMiddleware = require('../middleware/fileUpload.middleware');
 
 // Dynamic import for music-metadata
 let musicMetadata;
