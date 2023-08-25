@@ -29,35 +29,45 @@ export class MetadataComponent implements OnInit {
     if (event.target.files && event.target.files.length > 0) {
         this.selectedFile = event.target.files[0];
     }
-}
+  }
 
+  handleURLSubmission(): void {
+    if (this.metadataForm.valid) {
+      this.metadata = null;
+      const url = this.metadataForm.value.url;
+      this.downloadService.getMetadata({ url }).subscribe(
+        (response: Download) => {
+          // Handle the successful response, e.g., update the metadata table
+          this.metadata = response.metadata;
+          console.log('Metadata:', this.metadata);
+        },
+        (error: any) => {
+          // Handle error response
+          console.error('Error fetching metadata:', error);
+        }
+      );
+    }
+  }
 
-
-  onSubmit(): void {
+  handleFileUpload(): void {
     const formData = new FormData();
     formData.append('file', this.selectedFile, this.selectedFile.name);
 
-    // Upload the file first
-    this.downloadService.uploadFile(formData).subscribe(uploadResponse => {
+    // Upload the file
+    this.downloadService.uploadFile(formData).subscribe((uploadResponse: Download ) => {
+      // Handle the successful upload response
+      this.metadata = uploadResponse.metadata;
       console.log('File uploaded successfully:', uploadResponse);
-
-      // Then fetch metadata
-      if (this.metadataForm.valid) {
-        const url = this.metadataForm.value.url;
-        this.downloadService.getMetadata({ url }).subscribe(
-          (response: Download) => {
-            // Handle the successful response, e.g., update the metadata table
-            this.metadata = response.metadata;
-            console.log('Metadata:', this.metadata);
-          },
-          (error: any) => {
-            // Handle error response
-            console.error('Error fetching metadata:', error);
-          }
-        );
-      }
     }, uploadError => {
       console.error('Error uploading file:', uploadError);
     });
+  }
+
+  onSubmit(): void {
+    if (this.inputType === 'url') {
+      this.handleURLSubmission();
+    } else if (this.inputType === 'file') {
+      this.handleFileUpload();
+    }
   }
 }

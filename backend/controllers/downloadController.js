@@ -35,7 +35,7 @@ exports.uploadMP3 = async (req, res) => {
         });
 
         await newDownload.save();
-        res.json({ message: 'MP3 uploaded and metadata extracted successfully.', filePath: file.path });
+        res.json({ message: 'MP3 uploaded and metadata extracted successfully.', metadata: newDownload.metadata});
 
     } catch (error) {
         console.error('Error uploading the MP3:', error);
@@ -76,7 +76,7 @@ exports.downloadMP3 = async (req, res) => {
                         ...metadata.common,
                         comment: commentString
                     },
-                    url: url,
+                    url: req.body.url,
                     path: filePath
                 });
 

@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 
 const schema = mongoose.Schema({
     url: {
-        type: String,
-        required: true
+        type: String
     },
     downloadDate: {
         type: Date,
