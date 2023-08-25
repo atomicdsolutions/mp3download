@@ -26,6 +26,7 @@ const upload = multer({
     fileSize: 1024 * 1024 * 5 // Limit file size to 5MB
   },
   fileFilter: fileFilter
-});
+}).single('file'); // This should match the name attribute in your frontend
+
 
 module.exports = upload;

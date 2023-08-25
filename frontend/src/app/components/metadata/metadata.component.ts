@@ -11,7 +11,8 @@ import { Download } from '../../models/download.model';
 export class MetadataComponent implements OnInit {
   metadataForm!: FormGroup;
   metadata: any;  // This can be used to store and display the fetched metadata
-  selectedFile: File = null;
+  selectedFile: any = null;
+  inputType: 'url' | 'file' = 'url';  // Default to 'url'
 
   constructor(
     private fb: FormBuilder,
@@ -23,26 +24,40 @@ export class MetadataComponent implements OnInit {
       url: ['', [Validators.required, Validators.pattern(/^https?:\/\/.+/)]]
     });
   }
-onFileChange(event) {
-    this.selectedFile = <File>event.target.files[0];
+
+  onFileChange(event: any): void {
+    if (event.target.files && event.target.files.length > 0) {
+        this.selectedFile = event.target.files[0];
+    }
 }
+
+
+
   onSubmit(): void {
     const formData = new FormData();
     formData.append('file', this.selectedFile, this.selectedFile.name);
 
-    if (this.metadataForm.valid) {
-      const url = this.metadataForm.value.url;
-      this.downloadService.getMetadata({ url }).subscribe(
-        (response: Download) => {
-          // Handle the successful response, e.g., update the metadata table
-          this.metadata = response.metadata;
-          console.log('Metadata:', this.metadata);
-        },
-        (error: any) => {
-          // Handle error response
-          console.error('Error fetching metadata:', error);
-        }
-      );
-    }
+    // Upload the file first
+    this.downloadService.uploadFile(formData).subscribe(uploadResponse => {
+      console.log('File uploaded successfully:', uploadResponse);
+
+      // Then fetch metadata
+      if (this.metadataForm.valid) {
+        const url = this.metadataForm.value.url;
+        this.downloadService.getMetadata({ url }).subscribe(
+          (response: Download) => {
+            // Handle the successful response, e.g., update the metadata table
+            this.metadata = response.metadata;
+            console.log('Metadata:', this.metadata);
+          },
+          (error: any) => {
+            // Handle error response
+            console.error('Error fetching metadata:', error);
+          }
+        );
+      }
+    }, uploadError => {
+      console.error('Error uploading file:', uploadError);
+    });
   }
 }

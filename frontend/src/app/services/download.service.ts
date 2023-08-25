@@ -19,4 +19,9 @@ export class DownloadService {
   getMetadata(data: { url: string }): Observable<Download> {
     return this.http.post<Download>(`${this.baseUrl}/metadata`, data);
   }
+
+  uploadFile(formData: FormData): Observable<any> {
+    const uploadUrl = `${this.baseUrl}/upload`; // Replace with your backend endpoint for file upload
+    return this.http.post(uploadUrl, formData);
+  }
 }

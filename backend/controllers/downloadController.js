@@ -13,8 +13,9 @@ import('music-metadata').then(module => {
 
 exports.uploadMP3 = async (req, res) => {
     try {
-        if (!req.file) {
-            return res.status(400).send('No file uploaded.');
+        const file = req.file;
+        if (!file) {
+            return res.status(400).send('No file uploaded');
         }
 
         const filePath = req.file.path;
@@ -34,7 +35,7 @@ exports.uploadMP3 = async (req, res) => {
         });
 
         await newDownload.save();
-        res.json({ message: 'MP3 uploaded and metadata extracted successfully.', download: newDownload });
+        res.json({ message: 'MP3 uploaded and metadata extracted successfully.', filePath: file.path });
 
     } catch (error) {
         console.error('Error uploading the MP3:', error);

@@ -1,11 +1,23 @@
 <div fxLayout="column" fxLayoutAlign="center center" class="container">
     <form [formGroup]="metadataForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutGap="20px">
-        <mat-form-field>
+        <!-- Radio buttons for selection -->
+        <mat-radio-group [value]="inputType" (change)="inputType = $event.value">
+            <mat-radio-button value="url">Enter URL</mat-radio-button>
+            <mat-radio-button value="file">Upload File</mat-radio-button>
+        </mat-radio-group>
+
+        <!-- Conditionally display URL input -->
+        <mat-form-field *ngIf="inputType === 'url'">
             <mat-label>URL</mat-label>
             <input matInput formControlName="url" placeholder="Enter the URL">
-        <mat-label for="file">Upload File:</mat-label>
-        <input type="file" id="file" (change)="onFileChange($event)">
         </mat-form-field>
+
+        <!-- Conditionally display file input without mat-form-field -->
+        <div *ngIf="inputType === 'file'">
+            <label for="file">Upload File:</label>
+            <input type="file" id="file" name="file" (change)="onFileChange($event)">
+        </div>
+
         <button mat-raised-button type="submit">Get Metadata</button>
     </form>
     <app-metadata-table [metadata]="metadata"></app-metadata-table>
