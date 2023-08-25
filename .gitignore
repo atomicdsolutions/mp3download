@@ -1,0 +1,12 @@
+*.log
+
+baclend/node_modules/
+frontend/node_modules/
+
+myconfig.yml
+
+logs/*.tmp
+
+# This is a comment
+*.cache
+
