@@ -12,13 +12,14 @@ const storage = multer.diskStorage({
 
 // Filter for file types
 const fileFilter = (req, file, cb) => {
-  // Accept only .jpg, .jpeg, and .png files
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'image/jpg') {
+  // Accept only .jpg, .jpeg, .png, and .mp3 files
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png' || file.mimetype === 'audio/mpeg') {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file type, only JPEG and PNG is allowed!'), false);
+    cb(new Error('Invalid file type, only JPEG, PNG, and MP3 are allowed!'), false);
   }
 };
+
 
 const upload = multer({
   storage: storage,
